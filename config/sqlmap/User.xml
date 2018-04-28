@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="test">
+    <!--在映射文件中配置多个sql
+        通过select执行数据库操作
+        id：唯一标示文件中的sql
+        将sql封装到mapperstatement对象中，所以将id成为statement的ID
+    -->
+    <!--
+        parameterType:指定输入参数类型,此处指定int类型
+        #{}参数站位符,其中的id表示接受输入的参数,参数名是id.
+        如果输入的参数类型为简单数据类型,#{}中的名称可以是value，也可以是任意名称.
+        resultType：指定sql查询的输出结果所映射的java数据对象类型,resultType表示将
+                    输出单条记录所映射的java对象类型.
+    -->
+    <select id="findUserById" parameterType="int" resultType="com.firebird.mybatis.po.TUser">
+    select * from t_user where id=#{value}
+    </select>
+
+    <select id="findUserByName" parameterType="java.lang.String" resultType="com.firebird.mybatis.po.TUser">
+        select * from t_user where nickname like '%${value}%'
+    </select>
+
+    <!--添加-->
+
+    <insert id="insertUser">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into t_user(nickname,passwd,first_name,last_name)
+        VALUES(#{nickname},#{password},#{first_name},#{last_name})
+     </insert>
+</mapper>

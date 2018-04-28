@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <properties resource="db.properties">
+    </properties>
+    <!--和spring的配置将来会整合-->
+    <environments default="development">
+        <environment id="development">
+            <!--实用JDBC的事物管理模型-->
+            <transactionManager type="JDBC"/>
+            <!--数据库连接，由mybatis管理-->
+            <dataSource type="POOLED">
+                <property name="driver" value="${db.driver}"/>
+                <property name="url" value="${db.url}"/>
+                <property name="username" value="${db.username}"/>
+                <property name="password" value="${db.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <package name="com.firebird.mybatis.mapper"/>
+    </mappers>
+</configuration>
